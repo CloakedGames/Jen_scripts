@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"terra_setter_template",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"terra_setter_template",
+  "parent":{
+    "name":"Setters",
+    "path":"folders/Terraform/Templates/Setters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

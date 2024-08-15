@@ -29,30 +29,30 @@ function register_example(_name, _func, _iterate = undefined, _params = undefine
 #endregion
 #region clear_terrain();
 /// @func clear_terrain();
-/// @desc Destroyed any cached JenGrids.
+/// @desc Destroyed any cached TerraGrids.
 function clear_terrain()
 {
-	jen_grid_destroy(_terrain1); _terrain1 = -1;
-	jen_grid_destroy(_terrain2); _terrain2 = -1;
-	jen_grid_destroy(_terrain3); _terrain3 = -1;
-	jen_grid_destroy(_terrain4); _terrain4 = -1;
+	terra_grid_destroy(_terrain1); _terrain1 = -1;
+	terra_grid_destroy(_terrain2); _terrain2 = -1;
+	terra_grid_destroy(_terrain3); _terrain3 = -1;
+	terra_grid_destroy(_terrain4); _terrain4 = -1;
 }
 #endregion
 #region generate_terrain();
 /// @func generate_terrain();
-/// @desc Generates any cached JenGrids.
+/// @desc Generates any cached TerraGrids.
 function generate_terrain()
 {
 	if (!_examples_4x)
 	{
-		if (jen_grid_exists(_terrain1)) { jen_grid_instantiate_depth(_terrain1, 0, 8, DEPTH_LAYER_1); }
+		if (terra_grid_exists(_terrain1)) { terra_grid_instantiate_depth(_terrain1, 0, 8, DEPTH_LAYER_1); }
 	}
 	else
 	{
-		if (jen_grid_exists(_terrain1)) { jen_grid_instantiate_depth(_terrain1, 0, 8, DEPTH_LAYER_1); }
-		if (jen_grid_exists(_terrain2)) { jen_grid_instantiate_depth(_terrain2, 20 * JEN_CELLW, 8, DEPTH_LAYER_1); }
-		if (jen_grid_exists(_terrain3)) { jen_grid_instantiate_depth(_terrain3, 0, 11 * JEN_CELLH + 8, DEPTH_LAYER_1); }
-		if (jen_grid_exists(_terrain4)) { jen_grid_instantiate_depth(_terrain4, 20 * JEN_CELLW, 11 * JEN_CELLH + 8, DEPTH_LAYER_1); }
+		if (terra_grid_exists(_terrain1)) { terra_grid_instantiate_depth(_terrain1, 0, 8, DEPTH_LAYER_1); }
+		if (terra_grid_exists(_terrain2)) { terra_grid_instantiate_depth(_terrain2, 20 * TERRA_CELLW, 8, DEPTH_LAYER_1); }
+		if (terra_grid_exists(_terrain3)) { terra_grid_instantiate_depth(_terrain3, 0, 11 * TERRA_CELLH + 8, DEPTH_LAYER_1); }
+		if (terra_grid_exists(_terrain4)) { terra_grid_instantiate_depth(_terrain4, 20 * TERRA_CELLW, 11 * TERRA_CELLH + 8, DEPTH_LAYER_1); }
 	}
 }
 #endregion
@@ -67,13 +67,13 @@ function run_example(_example)
 	if (_example == undefined) { exit; }
 	if (keyboard_check(vk_shift) && _example.func_iterate != undefined) {
 		if (!_examples_4x) {
-			if (jen_grid_exists(_terrain1)) { _terrain1 = _example.func_iterate(_terrain1); }
+			if (terra_grid_exists(_terrain1)) { _terrain1 = _example.func_iterate(_terrain1); }
 		}
 		else {
-			if (jen_grid_exists(_terrain1)) { _terrain1 = _example.func_iterate(_terrain1); }
-			if (jen_grid_exists(_terrain2)) { _terrain2 = _example.func_iterate(_terrain2); }
-			if (jen_grid_exists(_terrain3)) { _terrain3 = _example.func_iterate(_terrain3); }
-			if (jen_grid_exists(_terrain4)) { _terrain4 = _example.func_iterate(_terrain4); }
+			if (terra_grid_exists(_terrain1)) { _terrain1 = _example.func_iterate(_terrain1); }
+			if (terra_grid_exists(_terrain2)) { _terrain2 = _example.func_iterate(_terrain2); }
+			if (terra_grid_exists(_terrain3)) { _terrain3 = _example.func_iterate(_terrain3); }
+			if (terra_grid_exists(_terrain4)) { _terrain4 = _example.func_iterate(_terrain4); }
 		}		
 	}
 	else {
@@ -83,9 +83,9 @@ function run_example(_example)
 		}
 		else {
 			_terrain1 = _example.func(20, 11, 0, 8);
-			_terrain2 = _example.func(20, 11, 20 * JEN_CELLW, 8);
-			_terrain3 = _example.func(20, 11, 0, 11 * JEN_CELLH + 8);
-			_terrain4 = _example.func(20, 11, 20 * JEN_CELLW, 11 * JEN_CELLH + 8);
+			_terrain2 = _example.func(20, 11, 20 * TERRA_CELLW, 8);
+			_terrain3 = _example.func(20, 11, 0, 11 * TERRA_CELLH + 8);
+			_terrain4 = _example.func(20, 11, 20 * TERRA_CELLW, 11 * TERRA_CELLH + 8);
 		}
 	}
 	generate_terrain();
@@ -108,9 +108,9 @@ function run_example(_example)
 }
 #endregion
 
-register_example("Plains", jen_example_plains);
-register_example("Ruins", jen_example_ruins);
-register_example("Caves", jen_example_caves, jen_example_caves_iterate);
-register_example("Lakes", jen_example_lake);
-register_example("Dungeon", jen_example_dungeon);
-register_example("Autotiles", jen_example_autotiles);
+register_example("Plains", terra_example_plains);
+register_example("Ruins", terra_example_ruins);
+register_example("Caves", terra_example_caves, terra_example_caves_iterate);
+register_example("Lakes", terra_example_lake);
+register_example("Dungeon", terra_example_dungeon);
+register_example("Autotiles", terra_example_autotiles);

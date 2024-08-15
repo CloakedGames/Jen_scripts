@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__terra_initialize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__terra_initialize",
+  "parent":{
+    "name":"_Internal",
+    "path":"folders/Terraform/_Internal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

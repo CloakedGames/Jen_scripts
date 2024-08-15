@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__2_terra_shapes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__2_terra_shapes",
+  "parent":{
+    "name":"Terraform",
+    "path":"folders/Terraform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

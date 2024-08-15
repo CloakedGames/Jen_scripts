@@ -15,7 +15,7 @@
   "out_tilevborder":2,
   "parent":{
     "name":"Autotiles",
-    "path":"folders/JenScripts/Templates/Autotiles.yy",
+    "path":"folders/Terraform/Templates/Autotiles.yy",
   },
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",

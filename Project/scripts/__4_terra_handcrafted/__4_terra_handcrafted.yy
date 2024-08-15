@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__4_terra_handcrafted",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__4_terra_handcrafted",
+  "parent":{
+    "name":"Terraform",
+    "path":"folders/Terraform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -27,7 +27,7 @@
   "origin":0,
   "parent":{
     "name":"_Sprites",
-    "path":"folders/JenScripts/Templates/Autotiles/_Sprites.yy",
+    "path":"folders/Terraform/Templates/Autotiles/_Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__5_terra_mazes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__5_terra_mazes",
+  "parent":{
+    "name":"Terraform",
+    "path":"folders/Terraform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -2,7 +2,7 @@
 randomize();
 
 room_goto(rm_main);
-jen_example_dungeon_init();
+terra_example_dungeon_init();
 
 function clear_room()
 {

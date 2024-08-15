@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__6_terra_debugging",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__6_terra_debugging",
+  "parent":{
+    "name":"Terraform",
+    "path":"folders/Terraform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

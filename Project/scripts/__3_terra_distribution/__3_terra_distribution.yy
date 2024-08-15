@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__3_terra_distribution",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__3_terra_distribution",
+  "parent":{
+    "name":"Terraform",
+    "path":"folders/Terraform.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
