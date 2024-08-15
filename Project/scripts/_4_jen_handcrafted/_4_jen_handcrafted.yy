@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "_4_jen_handcrafted",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "JenScripts",
-    "path": "folders/JenScripts.yy",
+  "$GMScript":"v1",
+  "%Name":"_4_jen_handcrafted",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"_4_jen_handcrafted",
+  "parent":{
+    "name":"JenScripts",
+    "path":"folders/JenScripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

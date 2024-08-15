@@ -1,4 +1,4 @@
-/// For debugging purposes.
+//For debugging purposes.
 
 #region jen_grid_string(JenGrid);
 /// @func jen_grid_string(JenGrid):

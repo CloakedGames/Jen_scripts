@@ -32,7 +32,7 @@ function jen_grid_create(_width, _height, _cleared = noone)
 	return _grid;
 }
 #endregion
-//TODO: NEW jen_grid_create_string(width, height, string, [separator]);
+//v3.1.0: NEW jen_grid_create_string(width, height, string, [separator]);
 #region jen_grid_destroy(JenGrid);
 /// @func jen_grid_destroy(grid):
 /// @desc Destroy a JenGrid, clearing it from memory.
@@ -209,6 +209,10 @@ function jen_test(_grid, _x, _y, _match_value)
 	var _test = jen_get(_grid, _x, _y);
 	var i = 0; repeat(array_length(_match_value))
 	{
+		//TODO: Implement this more rigorous type checking. (Not LTS compatible).
+		//var _compare = _match_value[i];
+		//if (_compare == all) { return true; }
+		//if (typeof(_compare) == typeof(_test) && _compare == _test) { return true; }
 		if (_match_value[i] == all || _match_value[i] == _test) { return true; }
 	i++; }
 	return false;
@@ -388,6 +392,9 @@ function jen_grid_scale(_grid, _factor, _upscale)
 			y1 = yy / _factor;
 			val = jen_get(_grid, xx, yy);
 			jen_set(_temp, x1, y1, all, val);
+			
+			//TODO: Consider taking the max when downscaling instead.
+			//val = ds_grid_get_max(_grid, xx, yy, xx + _factor, yy + _factor);
 		} }
 	}
 	
@@ -408,6 +415,8 @@ function jen_grid_scale(_grid, _factor, _upscale)
 /// @arg	{Struct}			[struct]		Also supports a function(xcell, ycell) that returns a struct.
 function jen_grid_instantiate_layer(_grid, _x1, _y1, _layer, _struct = undefined)
 {
+	//TODO: Add error message for invalid layer.
+	
 	//Getting width and height of the grid.
 	var _w = jen_grid_width(_grid);
 	var _h = jen_grid_height(_grid);
@@ -581,4 +590,4 @@ function jen_grid_instantiate_autotile16(_grid, _x1, _y1, _match_value, _bounds,
 	} }
 }
 #endregion
-//TODO: NEW jen_grid_instantiate_autotile47(...);
+//v3.1.0: NEW jen_grid_instantiate_autotile47(...);

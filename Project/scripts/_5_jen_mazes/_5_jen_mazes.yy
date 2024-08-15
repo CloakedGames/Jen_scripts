@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "_5_jen_mazes",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "JenScripts",
-    "path": "folders/JenScripts.yy",
+  "$GMScript":"v1",
+  "%Name":"_5_jen_mazes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"_5_jen_mazes",
+  "parent":{
+    "name":"JenScripts",
+    "path":"folders/JenScripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

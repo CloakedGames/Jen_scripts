@@ -21,6 +21,7 @@ JEN_CELLW = 16;
 show_debug_message(">>> JenScripts version '" + JEN_SCRIPTS_VERSION + "' initialized!");
 
 //Internal JenScripts Functions (Undocumented)
+//TODO: Consider the implication of duplicate values in these arrays--document or sanitize.
 #region _jenternal_convert_array_choose(new_value);
 /// @func _jenternal_convert_array_choose
 /// @desc	Returns a random value from the array.

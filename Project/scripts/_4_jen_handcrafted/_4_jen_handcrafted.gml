@@ -60,6 +60,7 @@ function jen_grid_copy_instances(_x1, _y1, _cellsw, _cellsh, _layer = undefined,
 /// @returns {Id.DsGrid}
 function jen_grid_copy_tiles(_x1, _y1, _cellsw, _cellsh, _tilemap, _modify_tiledata = undefined)
 {
+	//TODO: This should support also support layer ID if possible.
 	//Converting a layer name into a tilemap id.
 	if (is_string(_tilemap))
 	{

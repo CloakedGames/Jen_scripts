@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "jen_setter_template",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Setters",
-    "path": "folders/JenScripts/Templates/Setters.yy",
+  "$GMScript":"v1",
+  "%Name":"jen_setter_template",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"jen_setter_template",
+  "parent":{
+    "name":"Setters",
+    "path":"folders/JenScripts/Templates/Setters.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

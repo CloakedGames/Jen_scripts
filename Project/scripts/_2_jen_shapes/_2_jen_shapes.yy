@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "_2_jen_shapes",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "JenScripts",
-    "path": "folders/JenScripts.yy",
+  "$GMScript":"v1",
+  "%Name":"_2_jen_shapes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"_2_jen_shapes",
+  "parent":{
+    "name":"JenScripts",
+    "path":"folders/JenScripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

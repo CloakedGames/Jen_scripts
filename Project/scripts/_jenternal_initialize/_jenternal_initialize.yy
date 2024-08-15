@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "_jenternal_initialize",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "_Internal",
-    "path": "folders/JenScripts/_Internal.yy",
+  "$GMScript":"v1",
+  "%Name":"_jenternal_initialize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"_jenternal_initialize",
+  "parent":{
+    "name":"_Internal",
+    "path":"folders/JenScripts/_Internal.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,4 +1,139 @@
-//Heightmap functions, and noise functions (once added).
+//These functions are deprecated in v3.0.0. Planned for v3.1.0.
+//Preserved here for reference, or if someone really really needs them.
+
+//Wandering
+
+#region jen_wander_direction(JenGrid, x1, y1, initial_angle, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, new_value, [chance], [setter]);
+/// @func jen_wander_direction
+/// @desc Will create a wandering line between two positions.
+/// @arg	{Id.DsGrid}		JenGrid
+/// @arg  x1
+/// @arg  y1
+/// @arg  initial_angle
+/// @arg  correction_count
+/// @arg  correction_accuracy
+/// @arg  adjustment_count
+/// @arg  adjustment_accuracy
+/// @arg  lifetime
+/// @arg  replace
+/// @arg  new_value
+/// @arg  [chance]
+/// @arg  [setter]	
+function jen_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _new_value, _chance = 100, _setter = undefined)
+{
+	//Execute the wandering.
+	var _count = 0; var xx = _x1; var yy = _y1;
+	var _angle = _initial_angle + irandom_range(-_correction_accuracy, _correction_accuracy);
+	var _angle_off = 0;
+	repeat(_lifetime)
+	{
+		//Set the value for that new position.
+		if (_jenternal_percent(_chance))
+		{
+			//TODO: Update to use jen_set as default _setter parameter.
+			if (_setter == undefined)
+			{
+				//Directly set the target value to the application value.
+				jen_set(_grid, round(xx), round(yy), _replace, _new_value);
+			}
+			else if (_replace == all || jen_get(_grid, round(xx), round(yy)) == _replace)
+			{
+				_setter(_grid, round(xx), round(yy), _replace, _new_value);
+			}
+		}
+		
+		//Updating primary angle.
+		if (_correction_count == 0 || _count % _correction_count == 0)
+		{
+			_angle = _initial_angle + irandom_range(-_correction_accuracy, _correction_accuracy);
+		}
+		//Updating movement angle.
+		if (_adjustment_count == 0 || _count % _adjustment_count == 0)
+		{
+			_angle_off = irandom_range(-_adjustment_accuracy, _adjustment_accuracy);
+		}
+		_angle += _angle_off;
+		
+		//Calculating a new position.
+		xx += lengthdir_x(1, _angle);
+		yy += lengthdir_y(1, _angle);
+
+		_count++; //Increment the count.
+	}
+}
+#endregion
+#region jen_wander_line(JenGrid, x1, y1, x2, y2, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, new_value, [chance], [setter]);
+/// @func jen_wander_line
+/// @desc Will create a wandering line between two positions.
+/// @arg	{Id.DsGrid}		JenGrid
+/// @arg  x1
+/// @arg  y1
+/// @arg  x2
+/// @arg  y2
+/// @arg  correction_count
+/// @arg  correction_accuracy
+/// @arg  adjustment_count
+/// @arg  adjustment_accuracy
+/// @arg  lifetime
+/// @arg  replace
+/// @arg  new_value
+/// @arg  [chance]
+/// @arg  [setter]	
+function jen_wander_line(_grid, _x1, _y1, _x2, _y2, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _new_value, _chance = 100, _setter = jen_set)
+{
+	//Execute the wandering.
+	var _count = 0; var xx = _x1; var yy = _y1;
+	var _angle = point_direction(_x1, _y1, _x2, _y2) + irandom_range(-_correction_accuracy, _correction_accuracy);
+	var _angle_off = 0;
+	repeat(_lifetime)
+	{
+		//Set the value for that new position.
+		if (_jenternal_percent(_chance))
+		{
+			//TODO: Update to use jen_set as default _setter parameter.
+			if (_setter == undefined)
+			{
+				//Directly set the target value to the application value.
+				jen_set(_grid, round(xx), round(yy), _replace, _new_value);
+			}
+			else if (_replace == all || jen_get(_grid, round(xx), round(yy)) == _replace)
+			{
+				_setter(_grid, round(xx), round(yy), _replace, _new_value);
+			}
+		}
+		
+		//Updating primary angle.
+		if (_correction_count == 0 || _count % _correction_count == 0)
+		{
+			_angle = point_direction(xx, yy, _x2, _y2) + irandom_range(-_correction_accuracy, _correction_accuracy);
+		}
+		//Updating movement angle.
+		if (_adjustment_count == 0 || _count % _adjustment_count == 0)
+		{
+			_angle_off = irandom_range(-_adjustment_accuracy, _adjustment_accuracy);
+		}
+		
+		//Moving directly to the target.
+		if (point_distance(xx, yy, _x2, _y2) <= max(_correction_count, _adjustment_count))
+		{
+			_angle = point_direction(xx, yy, _x2, _y2);
+		}
+		
+		_angle += _angle_off;
+		
+		//Calculating a new position.
+		xx += lengthdir_x(1, _angle);
+		yy += lengthdir_y(1, _angle);
+		
+		_count++; //Increment the count.
+		
+		//Exit early if it has reached the destination.
+		if (point_distance(xx, yy, _x2, _y2) <= 0.5) { exit; }
+	}
+}
+#endregion
+
+//Heightmaps
 
 //Instantiation
 #region jen_heightmap_create(width, height);
@@ -22,7 +157,7 @@ function jen_heightmap_destroy(_heightmap)
 	ds_grid_destroy(_heightmap);
 }
 #endregion
-//TODO: jen_heightmap_exists
+//v3.1.0: jen_heightmap_exists
 
 //Properties
 #region jen_heightmap_get(heightmap, x1, y1);

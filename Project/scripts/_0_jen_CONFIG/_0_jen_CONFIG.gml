@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------------------------------------
 // <2023.8 (LTS) --------------------------------------------------------------------------------------------
 
-
+//TODO: Cleanup, not sure if LTS will be supported at all. Maybe for v3.1.0.
 #region _jenternal_object_exists(index);
 /// @func _jenternal_object_exists(index):
 /// @desc Used as a robust object_exists for <2023.8.

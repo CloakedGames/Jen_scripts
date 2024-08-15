@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "init_macros",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "Control",
-    "path": "folders/Testing/Control.yy",
+  "$GMScript":"v1",
+  "%Name":"init_macros",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"init_macros",
+  "parent":{
+    "name":"Control",
+    "path":"folders/Testing/Control.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
