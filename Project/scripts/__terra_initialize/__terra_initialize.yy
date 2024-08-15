@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__terra_initialize",
   "parent":{
-    "name":"_Internal",
-    "path":"folders/Terraform/_Internal.yy",
+    "name":"__Internal",
+    "path":"folders/Terraform/__Internal.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

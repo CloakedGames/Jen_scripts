@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__terra_deprecated",
   "parent":{
-    "name":"Terraform - Deprecated",
-    "path":"folders/Terraform - Deprecated.yy",
+    "name":"__Internal",
+    "path":"folders/Terraform/__Internal.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

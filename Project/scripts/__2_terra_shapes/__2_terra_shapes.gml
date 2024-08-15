@@ -1,8 +1,8 @@
 //Basic shape functions. Lines, circle, rectangles, etcetera.
 
 //Primitive shapes.
-#region terra_line(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, new_value, [chance], [setter]);
-/// @func terra_line(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, new_value, [chance], [setter]):
+#region terra_line(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, value, [chance], [setter]);
+/// @func terra_line(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, value, [chance], [setter]):
 /// @desc Creates a line between two points.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell1
@@ -10,10 +10,10 @@
 /// @arg	{Real}				xcell2
 /// @arg	{Real}				ycell2
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Chooses)
+/// @arg	{Any}					value		Supports Array (Chooses)
 /// @arg	{Real}				[chance]		Default: 100
 /// @arg	{Function}		[setter]		Default: terra_set
-function terra_line(_grid, _x1, _y1, _x2, _y2, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_line(_grid, _x1, _y1, _x2, _y2, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Calculating _step amounts for the line.
 	var _xdis = _x2 - _x1;
@@ -32,7 +32,7 @@ function terra_line(_grid, _x1, _y1, _x2, _y2, _replace, _new_value, _chance = 1
 		if (_terraternal_percent(_chance))
 		{
 			//Setting the line position/appropriate function.
-			_setter(_grid, round(xx), round(yy), _replace, _new_value);
+			_setter(_grid, round(xx), round(yy), _replace, _value);
 		}
 		//Increment position.
 		xx += _xdis;
@@ -41,8 +41,8 @@ function terra_line(_grid, _x1, _y1, _x2, _y2, _replace, _new_value, _chance = 1
 	}
 }
 #endregion
-#region terra_rectangle(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, new_value, [outline], [chance], [setter]);
-/// @func terra_rectangle(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, new_value, [outline], [chance], [setter]):
+#region terra_rectangle(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, value, [outline], [chance], [setter]);
+/// @func terra_rectangle(TerraGrid, xcell1, ycell1, xcell2, ycell2, replace, value, [outline], [chance], [setter]):
 /// @desc Creates a rectangle between two positions.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell1
@@ -51,10 +51,10 @@ function terra_line(_grid, _x1, _y1, _x2, _y2, _replace, _new_value, _chance = 1
 /// @arg	{Real}				ycell2
 /// @arg	{Real}				outline			0 = Filled
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Chooses)
+/// @arg	{Any}					value		Supports Array (Chooses)
 /// @arg	{Real}				[chance]		Default: 100
 /// @arg	{Function}		[setter]		Default: terra_set
-function terra_rectangle(_grid, _x1, _y1, _x2, _y2, _outline, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_rectangle(_grid, _x1, _y1, _x2, _y2, _outline, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Finding corners.
 	var _xx1 = min(_x1, _x2);
@@ -74,7 +74,7 @@ function terra_rectangle(_grid, _x1, _y1, _x2, _y2, _outline, _replace, _new_val
 		{
 			if (_terraternal_percent(_chance))
 			{
-				_setter(_grid, xx, yy, _replace, _new_value);
+				_setter(_grid, xx, yy, _replace, _value);
 			}
 		}
 		else
@@ -85,30 +85,30 @@ function terra_rectangle(_grid, _x1, _y1, _x2, _y2, _outline, _replace, _new_val
 	} }
 }
 #endregion
-#region terra_circle(TerraGrid, xcell1, ycell1, radius, filled, replace, new_value, [chance], [setter]);
-/// @func terra_circle(TerraGrid, xcell1, ycell1, radius, filled, replace, new_value, [chance], [setter]):
+#region terra_circle(TerraGrid, xcell1, ycell1, radius, filled, replace, value, [chance], [setter]);
+/// @func terra_circle(TerraGrid, xcell1, ycell1, radius, filled, replace, value, [chance], [setter]):
 /// @desc	Creates a circle at a location with given radius. The circle may be filled or left an outline.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell1
 /// @arg	{Real}				ycell1
 /// @arg	{Bool}				filled
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Chooses)
+/// @arg	{Any}					value		Supports Array (Chooses)
 /// @arg	{Real}				[chance]		Default: 100
 /// @arg	{Function}		[setter]		Default: terra_set
-function terra_circle(_grid, _x1, _y1, _radius, _filled, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_circle(_grid, _x1, _y1, _radius, _filled, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	for (var yy = -_radius; yy <= _radius; yy++) {
 	for (var xx = -_radius; xx <= _radius; xx++) {
 		var _dis = xx * xx + yy * yy;
 		if (_dis >= _radius * _radius + _radius) { continue; }
 		if (!_filled && _dis <= _radius * _radius - _radius) { continue; }
-		_setter(_grid, _x1 + xx, _y1 + yy, _replace, _new_value);
+		_setter(_grid, _x1 + xx, _y1 + yy, _replace, _value);
 	} }
 }
 #endregion
-#region terra_ellipse(TerraGrid, x1, y1, haxis, vaxis, angle, filled, replace, new_value, [chance], [setter]);
-/// @func terra_ellipse(TerraGrid, x1, y1, haxis, vaxis, angle, filled, replace, new_value, [chance], [setter]):
+#region terra_ellipse(TerraGrid, x1, y1, haxis, vaxis, angle, filled, replace, value, [chance], [setter]);
+/// @func terra_ellipse(TerraGrid, x1, y1, haxis, vaxis, angle, filled, replace, value, [chance], [setter]):
 /// @desc Creates an ellipse. Define the length of each axis, and the rotation.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell1
@@ -118,10 +118,10 @@ function terra_circle(_grid, _x1, _y1, _radius, _filled, _replace, _new_value, _
 /// @arg  {Real}				angle
 /// @arg	{Bool}				filled
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Chooses)
+/// @arg	{Any}					value		Supports Array (Chooses)
 /// @arg	{Real}				[chance]		Default: 100
 /// @arg	{Function}		[setter]		Default: terra_set
-function terra_ellipse(_grid, _x1, _y1, _haxis, _vaxis,  _angle, _filled, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_ellipse(_grid, _x1, _y1, _haxis, _vaxis,  _angle, _filled, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	static L = [];
 	static R = [];
@@ -149,7 +149,7 @@ function terra_ellipse(_grid, _x1, _y1, _haxis, _vaxis,  _angle, _filled, _repla
 		//Creating the ellipse in the temporary grid.
 		xx = round(_x1 + xx);
 		yy = round(_y1 + yy);
-		terra_set(_temp, xx, yy, all, _new_value);
+		terra_set(_temp, xx, yy, all, _value);
 		
 		//Caching L/R bounds of the ellipse for filling later.
 		if (_filled && yy >= 0 && yy < _h)
@@ -166,7 +166,7 @@ function terra_ellipse(_grid, _x1, _y1, _haxis, _vaxis,  _angle, _filled, _repla
 		{
 			if (L[yy] != undefined && R[yy] != undefined)
 			{
-				terra_line(_temp, L[yy], yy, R[yy], yy, noone, _new_value);
+				terra_line(_temp, L[yy], yy, R[yy], yy, noone, _value);
 			}
 		}
 		L = [];

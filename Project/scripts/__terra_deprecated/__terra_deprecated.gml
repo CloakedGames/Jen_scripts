@@ -1,9 +1,43 @@
 //These functions are deprecated in v3.0.0. Planned for v3.1.0.
 //Preserved here for reference, or if someone really really needs them.
 
+//Copying from Arrays
+//This can probably be fully removed.
+#region terra_grid_copy_instances_array(x1, y1, width, height, rooms_w, rooms_h, [xspace], [yspace]);
+/*
+/// @func terra_grid_copy_instances_array
+/// @desc Divides the current room into a grid, and outputs a list of terra_grids.
+/// @arg  x1
+/// @arg  y1
+/// @arg  width
+/// @arg  height
+/// @arg  rooms_w
+/// @arg  rooms_h
+/// @arg  [xspace]
+/// @arg  [yspace]
+function terra_grid_copy_instances_array(_x1, _y1, _width, _height, _rooms_w, _rooms_h, _xspace = 0, _yspace = 0)
+{
+	var _xgrid = TERRA_CELLW;
+	var _ygrid = TERRA_CELLH;
+	var _list = ds_list_create();
+	
+	//Iterate through entire grid
+	for (var yy = 0; yy < _rooms_h; yy ++) {
+	for (var xx = 0; xx < _rooms_w; xx ++)
+	{
+		var _grid = terra_grid_copy_instances_part((_x1 + _xspace + (xx * (_xspace + _width))),
+			(_y1 + _yspace + (yy * (_yspace + _height))), _width, _height, _xgrid, _ygrid);
+		ds_list_add(_list, _grid);
+	} }
+	
+	return _list;
+}
+*/
+#endregion
+
 //Wandering
 
-#region terra_wander_direction(TerraGrid, x1, y1, initial_angle, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, new_value, [chance], [setter]);
+#region terra_wander_direction(TerraGrid, x1, y1, initial_angle, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, value, [chance], [setter]);
 /*
 /// @func terra_wander_direction
 /// @desc Will create a wandering line between two positions.
@@ -17,10 +51,10 @@
 /// @arg  adjustment_accuracy
 /// @arg  lifetime
 /// @arg  replace
-/// @arg  new_value
+/// @arg  value
 /// @arg  [chance]
 /// @arg  [setter]	
-function terra_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _new_value, _chance = 100, _setter = undefined)
+function terra_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _value, _chance = 100, _setter = undefined)
 {
 	//Execute the wandering.
 	var _count = 0; var xx = _x1; var yy = _y1;
@@ -35,11 +69,11 @@ function terra_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_cou
 			if (_setter == undefined)
 			{
 				//Directly set the target value to the application value.
-				terra_set(_grid, round(xx), round(yy), _replace, _new_value);
+				terra_set(_grid, round(xx), round(yy), _replace, _value);
 			}
 			else if (_replace == all || terra_get(_grid, round(xx), round(yy)) == _replace)
 			{
-				_setter(_grid, round(xx), round(yy), _replace, _new_value);
+				_setter(_grid, round(xx), round(yy), _replace, _value);
 			}
 		}
 		
@@ -64,7 +98,7 @@ function terra_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_cou
 }
 */
 #endregion
-#region terra_wander_line(TerraGrid, x1, y1, x2, y2, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, new_value, [chance], [setter]);
+#region terra_wander_line(TerraGrid, x1, y1, x2, y2, correction_count, correction_accuracy, adjustment_count, adjustment_accuracy, lifetime, replace, value, [chance], [setter]);
 /*
 /// @func terra_wander_line
 /// @desc Will create a wandering line between two positions.
@@ -79,10 +113,10 @@ function terra_wander_direction(_grid, _x1, _y1, _initial_angle, _correction_cou
 /// @arg  adjustment_accuracy
 /// @arg  lifetime
 /// @arg  replace
-/// @arg  new_value
+/// @arg  value
 /// @arg  [chance]
 /// @arg  [setter]	
-function terra_wander_line(_grid, _x1, _y1, _x2, _y2, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_wander_line(_grid, _x1, _y1, _x2, _y2, _correction_count, _correction_accuracy, _adjustment_count, _adjustment_accuracy, _lifetime, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Execute the wandering.
 	var _count = 0; var xx = _x1; var yy = _y1;
@@ -97,11 +131,11 @@ function terra_wander_line(_grid, _x1, _y1, _x2, _y2, _correction_count, _correc
 			if (_setter == undefined)
 			{
 				//Directly set the target value to the application value.
-				terra_set(_grid, round(xx), round(yy), _replace, _new_value);
+				terra_set(_grid, round(xx), round(yy), _replace, _value);
 			}
 			else if (_replace == all || terra_get(_grid, round(xx), round(yy)) == _replace)
 			{
-				_setter(_grid, round(xx), round(yy), _replace, _new_value);
+				_setter(_grid, round(xx), round(yy), _replace, _value);
 			}
 		}
 		
@@ -308,7 +342,7 @@ function terra_heightmap_gradient(_width, _height, _radius, _density)
 }
 */
 #endregion
-#region terra_heightmap_apply(TerraGrid, heightmap, x1, y1, min, max, replace, new_value, [chance], [setter]);
+#region terra_heightmap_apply(TerraGrid, heightmap, x1, y1, min, max, replace, value, [chance], [setter]);
 /*
 /// @func terra_heightmap_apply
 /// @desc Converts a range of values in a heightmap to values in a grid.
@@ -319,10 +353,10 @@ function terra_heightmap_gradient(_width, _height, _radius, _density)
 /// @arg  min
 /// @arg  max
 /// @arg  replace
-/// @arg  new_value
+/// @arg  value
 /// @arg  [chance]
 /// @arg  [setter]	
-function terra_heightmap_apply(_grid, _heightmap, _x1, _y1, _min, _max, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_heightmap_apply(_grid, _heightmap, _x1, _y1, _min, _max, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Getting the width and height of the heightmap.
 	var _width = terra_heightmap_width(_heightmap);
@@ -343,7 +377,7 @@ function terra_heightmap_apply(_grid, _heightmap, _x1, _y1, _min, _max, _replace
 	
 	//Apply the changes to the base grid.
 	terra_grid_paste(_grid, _temp, _x1, _y1, _replace, _chance, _setter);
-	terra_replace(_grid, "_terraternal_undefined", _new_value); //Replace with the intended value.
+	terra_replace(_grid, "_terraternal_undefined", _value); //Replace with the intended value.
 	terra_grid_destroy(_temp);
 }
 */

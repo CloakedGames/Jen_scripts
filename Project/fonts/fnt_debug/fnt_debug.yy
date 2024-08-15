@@ -120,7 +120,7 @@
   "name":"fnt_debug",
   "parent":{
     "name":"Fonts",
-    "path":"folders/Fonts.yy",
+    "path":"folders/Testing/Fonts.yy",
   },
   "pointRounding":0,
   "ranges":[

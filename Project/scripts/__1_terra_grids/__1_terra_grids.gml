@@ -138,93 +138,93 @@ function terra_get(_grid, _x, _y)
 	return _grid[# _x, _y];
 }
 #endregion
-#region terra_set(TerraGrid, xcell, ycell, replace, new_value);
-/// @func terra_set(TerraGrid, xcell, ycell, replace, new_value):
+#region terra_set(TerraGrid, xcell, ycell, replace, value);
+/// @func terra_set(TerraGrid, xcell, ycell, replace, value):
 /// @desc Set a value at an eligible position.
 ///				Returns true if the value is sucessfully set.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell
 /// @arg	{Real}				ycell
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Choose)
+/// @arg	{Any}					value		Supports Array (Choose)
 /// @returns {Bool}
-function terra_set(_grid, _x, _y, _replace, _new_value)
+function terra_set(_grid, _x, _y, _replace, _value)
 {
 	//Array conversions and other checks.
 	if (!terra_grid_inbounds(_grid, _x, _y)) { return false; }
-	_new_value = _terraternal_convert_array_choose(_new_value);
+	_value = _terraternal_convert_array_choose(_value);
 	
 	if (terra_test(_grid, _x, _y, _replace) ?? false)
 	{
 		//Setting the new value.
-		_grid[# _x, _y] = _new_value;
+		_grid[# _x, _y] = _value;
 		return true;
 	}
 	return false;
 }
 #endregion
-#region NEW terra_set_not(TerraGrid, xcell, ycell, replace, new_value);
-/// @func terra_set_not(TerraGrid, xcell, ycell, replace, new_value):
+#region NEW terra_set_not(TerraGrid, xcell, ycell, replace, value);
+/// @func terra_set_not(TerraGrid, xcell, ycell, replace, value):
 /// @desc Set a value at a position NOT matching the replace value(s).
 ///				Returns true if the value is sucessfully set.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell
 /// @arg	{Real}				ycell
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Choose)
+/// @arg	{Any}					value		Supports Array (Choose)
 /// @returns {Bool}
-function terra_set_not(_grid, _x, _y, _replace, _new_value)
+function terra_set_not(_grid, _x, _y, _replace, _value)
 {
 	//Array conversions and other checks.
 	if (!terra_grid_inbounds(_grid, _x, _y)) { return false; }
-	_new_value = _terraternal_convert_array_choose(_new_value);
+	_value = _terraternal_convert_array_choose(_value);
 	
 	if (!terra_test(_grid, _x, _y, _replace))
 	{
 		//Setting the new value.
-		_grid[# _x, _y] = _new_value;
+		_grid[# _x, _y] = _value;
 		return true;
 	}
 	return false;
 }
 #endregion
-#region NEW terra_test(TerraGrid, xcell, ycell, match_value);
-/// @func terra_test(TerraGrid, xcell, ycell, match_value):
+#region NEW terra_test(TerraGrid, xcell, ycell, match);
+/// @func terra_test(TerraGrid, xcell, ycell, match):
 /// @desc Returns true if a position on the grid matches the provided match value(s).
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				xcell
 /// @arg	{Real}				ycell
-/// @arg	{Any}					match_value		Supports Array (Any Of)
+/// @arg	{Any}					match					Supports Array (Any Of)
 /// @returns {Bool}
-function terra_test(_grid, _x, _y, _match_value)
+function terra_test(_grid, _x, _y, _match)
 {
 	//Return undefined if out of bounds.
 	if (!terra_grid_inbounds(_grid, _x, _y)) { return undefined; }
 	
 	//Array conversions.
-	_match_value = _terraternal_convert_array_all(_match_value);
-	if (_match_value[0] == all) { return true; }
+	_match = _terraternal_convert_array_all(_match);
+	if (_match[0] == all) { return true; }
 	
 	//Testing this position.
 	var _test = terra_get(_grid, _x, _y);
-	var i = 0; repeat(array_length(_match_value))
+	var i = 0; repeat(array_length(_match))
 	{
 		//TODO: Implement this more rigorous type checking. (Not LTS compatible).
-		//var _compare = _match_value[i];
+		//var _compare = _match[i];
 		//if (_compare == all) { return true; }
 		//if (typeof(_compare) == typeof(_test) && _compare == _test) { return true; }
-		if (_match_value[i] == all || _match_value[i] == _test) { return true; }
+		if (_match[i] == all || _match[i] == _test) { return true; }
 	i++; }
 	return false;
 }
 #endregion
-#region NEW terra_grid_count(TerraGrid, match_value);
-/// @func terra_grid_count(TerraGrid, match_value):
+#region NEW terra_grid_count(TerraGrid, match);
+/// @func terra_grid_count(TerraGrid, match):
 /// @desc	Returns the total number of matching values in the entire TerraGrid.
 /// @arg	{Id.DsGrid}		TerraGrid
-/// @arg	{Any}					match_value		Supports Array (Any Of)
+/// @arg	{Any}					match					Supports Array (Any Of)
 /// @returns {Real}
-function terra_grid_count(_grid, _match_value)
+function terra_grid_count(_grid, _match)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -235,7 +235,7 @@ function terra_grid_count(_grid, _match_value)
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		_count += real(terra_test(_grid, xx, yy, _match_value));
+		_count += real(terra_test(_grid, xx, yy, _match));
 	} }
 	return _count;
 }
@@ -528,29 +528,29 @@ function terra_grid_instantiate_tiles(_grid, _x1, _y1, _tilemap, _modify_tiledat
 	} }
 }
 #endregion
-#region terra_grid_instantiate_autotile16(TerraGrid, x, y, match_value, bounds, layer/tilemap, [mapping], [offset]);
-/// @func terra_grid_instantiate_autotile16(TerraGrid, x, y, match_value, bounds, layer/tilemap, [mapping], [offset]):
+#region terra_grid_instantiate_autotile16(TerraGrid, x, y, match, bounds, layer/tilemap, [mapping], [offset]);
+/// @func terra_grid_instantiate_autotile16(TerraGrid, x, y, match, bounds, layer/tilemap, [mapping], [offset]):
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				x
 /// @arg	{Real}				y
-/// @arg	{Any}					match_value		Supports Array (Any Of)
+/// @arg	{Any}					match					Supports Array (Any Of)
 /// @arg	{String}			layer					Layer name or tilemap ID.
 /// @arg	{Array}				[mapping]			Default: TERRA_AUTOTILE16_DEFAULT
 /// @arg	{Real}				[offset]			Default: 0
-function terra_grid_instantiate_autotile16(_grid, _x1, _y1, _match_value, _bounds, _tilemap, _mapping = TERRA_AUTOTILE16_DEFAULT, _offset = 0)
+function terra_grid_instantiate_autotile16(_grid, _x1, _y1, _match, _bounds, _tilemap, _mapping = TERRA_AUTOTILE16_DEFAULT, _offset = 0)
 {
-	#region _compute_autotile(_grid, xx, yy, _match_value, _bounds);
-	static _compute_autotile = function(_grid, xx, yy, _match_value, _bounds)
+	#region _compute_autotile(_grid, xx, yy, _match, _bounds);
+	static _compute_autotile = function(_grid, xx, yy, _match, _bounds)
 	{
 		var _checks
-		= (terra_test(_grid, xx - 1, yy - 1, _match_value) ?? _bounds) << 0
-		| (terra_test(_grid, xx,     yy - 1, _match_value) ?? _bounds) << 1
-		| (terra_test(_grid, xx + 1, yy - 1, _match_value) ?? _bounds) << 2
-		| (terra_test(_grid, xx + 1, yy,     _match_value) ?? _bounds) << 3
-		| (terra_test(_grid, xx + 1, yy + 1, _match_value) ?? _bounds) << 4
-		| (terra_test(_grid, xx,     yy + 1, _match_value) ?? _bounds) << 5
-		| (terra_test(_grid, xx - 1, yy + 1, _match_value) ?? _bounds) << 6
-		| (terra_test(_grid, xx - 1, yy,     _match_value) ?? _bounds) << 7;
+		= (terra_test(_grid, xx - 1, yy - 1, _match) ?? _bounds) << 0
+		| (terra_test(_grid, xx,     yy - 1, _match) ?? _bounds) << 1
+		| (terra_test(_grid, xx + 1, yy - 1, _match) ?? _bounds) << 2
+		| (terra_test(_grid, xx + 1, yy,     _match) ?? _bounds) << 3
+		| (terra_test(_grid, xx + 1, yy + 1, _match) ?? _bounds) << 4
+		| (terra_test(_grid, xx,     yy + 1, _match) ?? _bounds) << 5
+		| (terra_test(_grid, xx - 1, yy + 1, _match) ?? _bounds) << 6
+		| (terra_test(_grid, xx - 1, yy,     _match) ?? _bounds) << 7;
 		_checks = 255 ^ _checks; //Invert--we care about empty cells.
 		
 		var _index
@@ -582,9 +582,9 @@ function terra_grid_instantiate_autotile16(_grid, _x1, _y1, _match_value, _bound
 	for (var xx = 0; xx < _w; xx++)
 	{
 		//Setting each tile value in the tilemap.
-		if (terra_test(_grid, xx, yy, _match_value))
+		if (terra_test(_grid, xx, yy, _match))
 		{
-			var _tile = _mapping[_compute_autotile(_grid, xx, yy, _match_value, _bounds)] + 1 + _offset;
+			var _tile = _mapping[_compute_autotile(_grid, xx, yy, _match, _bounds)] + 1 + _offset;
 			tilemap_set(_tilemap, _tile, _x1 + xx, _y1 + yy);
 		}
 	} }

@@ -88,39 +88,6 @@ function terra_grid_copy_tiles(_x1, _y1, _cellsw, _cellsh, _tilemap, _modify_til
 }
 #endregion
 
-//TODO: terra_grid_split(TerraGrid, ... ?);
-
-//DEPRECATED (Delete Later)
-#region terra_grid_copy_instances_array(x1, y1, width, height, rooms_w, rooms_h, [xspace], [yspace]);
-/// @func terra_grid_copy_instances_array
-/// @desc Divides the current room into a grid, and outputs a list of terra_grids.
-/// @arg  x1
-/// @arg  y1
-/// @arg  width
-/// @arg  height
-/// @arg  rooms_w
-/// @arg  rooms_h
-/// @arg  [xspace]
-/// @arg  [yspace]
-function terra_grid_copy_instances_array(_x1, _y1, _width, _height, _rooms_w, _rooms_h, _xspace = 0, _yspace = 0)
-{
-	var _xgrid = TERRA_CELLW;
-	var _ygrid = TERRA_CELLH;
-	var _list = ds_list_create();
-	
-	//Iterate through entire grid
-	for (var yy = 0; yy < _rooms_h; yy ++) {
-	for (var xx = 0; xx < _rooms_w; xx ++)
-	{
-		var _grid = terra_grid_copy_instances_part((_x1 + _xspace + (xx * (_xspace + _width))),
-			(_y1 + _yspace + (yy * (_yspace + _height))), _width, _height, _xgrid, _ygrid);
-		ds_list_add(_list, _grid);
-	} }
-	
-	return _list;
-}
-#endregion
-
 //Pasting
 #region terra_grid_paste(target_TerraGrid, paste_TerraGrid, xcell, ycell, replace, [chance], [setter]);
 /// @func terra_grid_paste(target_TerraGrid, paste_TerraGrid, xcell, ycell, replace, [chance], [setter]):
@@ -159,20 +126,20 @@ function terra_grid_paste(_target, _paste, _x1, _y1, _replace, _chance = 100, _s
 	} }
 }
 #endregion
-#region terra_scatter_paste(target_TerraGrid, paste_TerraGrid, match_value, xcell_off, ycell_off, chance_paste, replace, [chance], [setter]);
-/// @func terra_scatter_paste(target_TerraGrid, paste_TerraGrid, match_value, xcell_off, ycell_off, chance_paste, replace, [chance], [setter]):
+#region terra_scatter_paste(target_TerraGrid, paste_TerraGrid, match, xcell_off, ycell_off, chance_paste, replace, [chance], [setter]);
+/// @func terra_scatter_paste(target_TerraGrid, paste_TerraGrid, match, xcell_off, ycell_off, chance_paste, replace, [chance], [setter]):
 /// @desc Pastes a TerraGrid (or array of TerraGrids) at matching values with a given paste chance.
 ///				Values of 'noone' in the pasted grid(s) will be ignored.
 /// @arg	{Id.DsGrid}		target_TerraGrid
 /// @arg  {Id.DsGrid}		paste_TerraGrid		Supports Array (Chooses)
-/// @arg  {Any}					match_value			Supports Array (Any Of)
+/// @arg  {Any}					match			Supports Array (Any Of)
 /// @arg  {Real}				xcell_off				Supports Array (Any Of)
 /// @arg  {Real}				ycell_off				Supports Array (Any Of)
 /// @arg	{Real}				chance_paste
 /// @arg  {Any}					replace					Supports Array (Any Of)
 /// @arg  {Real}				[chance]				Default: 100
 /// @arg  {Function}		[setter]				Default: terra_set
-function terra_scatter_paste(_target, _paste, _match_value, _xoff, _yoff, _chance_paste, _replace, _chance = 100, _setter = terra_set)
+function terra_scatter_paste(_target, _paste, _match, _xoff, _yoff, _chance_paste, _replace, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_target);
@@ -185,7 +152,7 @@ function terra_scatter_paste(_target, _paste, _match_value, _xoff, _yoff, _chanc
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		if (terra_test(_target, xx, yy, _match_value) && _terraternal_percent(_chance_paste))
+		if (terra_test(_target, xx, yy, _match) && _terraternal_percent(_chance_paste))
 		{
 			terra_grid_paste(_temp, _paste,
 				xx + _terraternal_convert_array_choose(_xoff),
@@ -201,20 +168,21 @@ function terra_scatter_paste(_target, _paste, _match_value, _xoff, _yoff, _chanc
 	terra_grid_destroy(_temp);
 }
 #endregion
-#region terra_number_paste(target_grid, paste_grid, match_value, x_offset, y_offset, replace, number, [chance], [setter]);
+#region terra_number_paste(target_TerraGrid, paste_TerraGrid, match, x_offset, y_offset, replace, number, [chance], [setter]);
+//TODO: Update JSDOC and review the code 'cause I'm not sure what's going on in here.
 /// @func terra_number_paste
-/// @desc Sets a new value some number of times, offset from a particular search value.
+/// @desc Sets a new value some number of times, offset from a particular matching value.
 ///				Values of 'noone' in the pasted grid(s) will be ignored.
 /// @arg	{Id.DsGrid}		target_TerraGrid
 /// @arg  {Id.DsGrid}		paste_TerraGrid		Supports Array (Chooses)
-/// @arg  {Any}					match_value			Supports Array (Any Of)
-/// @arg  {Real}				xcell_off				Supports Array (Any Of)
-/// @arg  {Real}				ycell_off				Supports Array (Any Of)
+/// @arg  {Any}					match							Supports Array (Any Of)
+/// @arg  {Real}				xcell_off					Supports Array (Any Of)
+/// @arg  {Real}				ycell_off					Supports Array (Any Of)
 /// @arg	{Real}				number
-/// @arg  {Any}					replace					Supports Array (Any Of)
-/// @arg  {Real}				[chance]				Default: 100
-/// @arg  {Function}		[setter]				Default: terra_set
-function terra_number_paste(_target, _paste, _match_value, _xoff, _yoff, _number, _replace, _chance = 100, _setter = terra_set)
+/// @arg  {Any}					replace						Supports Array (Any Of)
+/// @arg  {Real}				[chance]					Default: 100
+/// @arg  {Function}		[setter]					Default: terra_set
+function terra_number_paste(_target, _paste, _match, _xoff, _yoff, _number, _replace, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_target);
@@ -226,7 +194,7 @@ function terra_number_paste(_target, _paste, _match_value, _xoff, _yoff, _number
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		if (terra_test(_target, xx, yy, _match_value))
+		if (terra_test(_target, xx, yy, _match))
 		{
 			ds_list_add(_positions, { x1 : xx, y1 : yy });
 		}

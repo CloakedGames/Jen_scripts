@@ -1,12 +1,12 @@
 //Basic distribution functions. Scattering and replacing.
 
-#region terra_replace(TerraGrid, replace, new_value);
-/// @func terra_replace(TerraGrid, replace, new_value):
+#region terra_replace(TerraGrid, replace, value);
+/// @func terra_replace(TerraGrid, replace, value):
 /// @desc Replaces all matching values with a new value.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Any}					replace			Supports Array (Any Of)
-/// @arg	{Any}					new_value		Supports Array (Choose)
-function terra_replace(_grid, _replace, _new_value)
+/// @arg	{Any}					value		Supports Array (Choose)
+function terra_replace(_grid, _replace, _value)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -19,17 +19,17 @@ function terra_replace(_grid, _replace, _new_value)
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		terra_set(_grid, xx, yy, _replace, _new_value);
+		terra_set(_grid, xx, yy, _replace, _value);
 	} }
 }
 #endregion
-#region NEW terra_replace_not(TerraGrid, replace, new_value);
-/// @func terra_replace_not(TerraGrid, replace, new_value):
+#region NEW terra_replace_not(TerraGrid, replace, value);
+/// @func terra_replace_not(TerraGrid, replace, value):
 /// @desc Replaces all NOT matching values with a new value.
 /// @arg  {Id.DsGrid}		TerraGrid
 /// @arg  {Any}					replace			Supports Array (Any Of)
-/// @arg  {Any}					new_value		Supports Array (Choose)
-function terra_replace_not(_grid, _replace, _new_value)
+/// @arg  {Any}					value				Supports Array (Choose)
+function terra_replace_not(_grid, _replace, _value)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -42,19 +42,19 @@ function terra_replace_not(_grid, _replace, _new_value)
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		terra_set_not(_grid, xx, yy, _replace, _new_value);
+		terra_set_not(_grid, xx, yy, _replace, _value);
 	} }
 }
 #endregion
-#region terra_scatter(TerraGrid, replace, new_value, [chance], [setter]);
-/// @func terra_scatter(TerraGrid, replace, new_value, [chance], [setter]):
+#region terra_scatter(TerraGrid, replace, value, [chance], [setter]);
+/// @func terra_scatter(TerraGrid, replace, value, [chance], [setter]):
 /// @desc Replaces some percentage of replace values with a new value.
 /// @arg  {Id.DsGrid}		TerraGrid
 /// @arg  {Any}					replace			Supports Array (Any Of)
-/// @arg  {Any}					new_value		Supports Array (Choose)
+/// @arg  {Any}					value				Supports Array (Choose)
 /// @arg  {Real}				[chance]		Default: 100
 /// @arg  {Function}		[setter]		Default: terra_set
-function terra_scatter(_grid, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_scatter(_grid, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -66,23 +66,23 @@ function terra_scatter(_grid, _replace, _new_value, _chance = 100, _setter = ter
 	{
 		if (_terraternal_percent(_chance))
 		{
-			_setter(_grid, xx, yy, _replace, _new_value);
+			_setter(_grid, xx, yy, _replace, _value);
 		}
 	} }
 }
 #endregion
-#region terra_scatter_offset(TerraGrid, match_value, xcell_off, ycell_off, replace, new_value, [chance], [setter]);
-/// @func terra_scatter_offset(TerraGrid, match_value, xcell_off, ycell_off, replace, new_value, [chance], [setter]):
+#region terra_scatter_offset(TerraGrid, match, xcell_off, ycell_off, replace, value, [chance], [setter]);
+/// @func terra_scatter_offset(TerraGrid, match, xcell_off, ycell_off, replace, value, [chance], [setter]):
 /// @desc Replaces some percentage of replace values with another, offset from matching values.
 /// @arg	{Id.DsGrid}		TerraGrid
-/// @arg  {Any}					match_value			Supports Array (Any Of)
+/// @arg  {Any}					match			Supports Array (Any Of)
 /// @arg  {Real}				xcell_off				Supports Array (Any Of)
 /// @arg  {Real}				ycell_off				Supports Array (Any Of)
 /// @arg  {Any}					replace					Supports Array (Any Of)
-/// @arg  {Any}					new_value				Supports Array (Choose)
+/// @arg  {Any}					value						Supports Array (Choose)
 /// @arg  {Real}				[chance]				Default: 100
 /// @arg  {Function}		[setter]				Default: terra_set
-function terra_scatter_offset(_grid, _match_value, _xoff, _yoff, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_scatter_offset(_grid, _match, _xoff, _yoff, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -95,7 +95,7 @@ function terra_scatter_offset(_grid, _match_value, _xoff, _yoff, _replace, _new_
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		if (terra_test(_grid, xx, yy, _match_value))
+		if (terra_test(_grid, xx, yy, _match))
 		{
 			terra_set(_temp,
 				xx + _terraternal_convert_array_choose(_xoff),
@@ -106,22 +106,22 @@ function terra_scatter_offset(_grid, _match_value, _xoff, _yoff, _replace, _new_
 	
 	//Apply the temporary grid to the base grid.
 	terra_grid_paste(_grid, _temp, 0, 0, _replace, _chance, _setter);
-	terra_replace(_grid, "_terraternal_undefined", _new_value); //Replace with the intended value.
+	terra_replace(_grid, "_terraternal_undefined", _value); //Replace with the intended value.
 	
 	//Clearing memory.
 	terra_grid_destroy(_temp);
 }
 #endregion
-#region terra_number(TerraGrid, number, replace, new_value, [chance], [setter]);
-/// @func terra_number(TerraGrid, number, replace, new_value, [chance], [setter]):
+#region terra_number(TerraGrid, number, replace, value, [chance], [setter]);
+/// @func terra_number(TerraGrid, number, replace, value, [chance], [setter]):
 /// @desc Replaces a specific number of replace values with a new value.
 /// @arg	{Id.DsGrid}		TerraGrid
 /// @arg	{Real}				number
 /// @arg  {Any}					replace			Supports Array (Any Of)
-/// @arg  {Any}					new_value		Supports Array (Choose)
+/// @arg  {Any}					value				Supports Array (Choose)
 /// @arg  {Real}				[chance]		Default: 100
 /// @arg  {Function}		[setter]		Default: terra_set
-function terra_number(_grid, _number, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_number(_grid, _number, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -145,7 +145,7 @@ function terra_number(_grid, _number, _replace, _new_value, _chance = 100, _sett
 	{
 		var xx = _positions[| i].x1;
 		var yy = _positions[| i].y1;
-		if (_setter(_temp, xx, yy, _replace, _new_value))
+		if (_setter(_temp, xx, yy, _replace, _value))
 		{
 			terra_set(_temp, xx, yy, all, "_terraternal_replace");
 			if (++_count >= _number) { break; }
@@ -154,7 +154,7 @@ function terra_number(_grid, _number, _replace, _new_value, _chance = 100, _sett
 	
 	//Pasting the final modified TerraGrid.
 	terra_replace_not(_temp, "_terraternal_replace", noone);
-	terra_replace(_temp, "_terraternal_replace", _new_value);
+	terra_replace(_temp, "_terraternal_replace", _value);
 	terra_grid_paste(_grid, _temp, 0, 0, all, _chance, terra_set);
 	
 	//Clearing memory.
@@ -162,19 +162,19 @@ function terra_number(_grid, _number, _replace, _new_value, _chance = 100, _sett
 	terra_grid_destroy(_temp);
 }
 #endregion
-#region terra_number_offset(TerraGrid, match_value, xcell_off, ycell_off, number, replace, new_value, [chance], [setter]);
-/// @func terra_number_offset(TerraGrid, match_value, xcell_off, ycell_off, number, replace, new_value, [chance], [setter]):
+#region terra_number_offset(TerraGrid, match, xcell_off, ycell_off, number, replace, value, [chance], [setter]);
+/// @func terra_number_offset(TerraGrid, match, xcell_off, ycell_off, number, replace, value, [chance], [setter]):
 /// @desc Replaces a specific number of replace values with a new values, offset from matching values.
 /// @arg	{Id.DsGrid}		TerraGrid
-/// @arg  {Any}					match_value			Supports Array (Any Of)
+/// @arg  {Any}					match			Supports Array (Any Of)
 /// @arg  {Real}				xcell_off				Supports Array (Any Of)
 /// @arg  {Real}				ycell_off				Supports Array (Any Of)
 /// @arg	{Real}				number
 /// @arg  {Any}					replace					Supports Array (Any Of)
-/// @arg  {Any}					new_value				Supports Array (Choose)
+/// @arg  {Any}					value						Supports Array (Choose)
 /// @arg  {Real}				[chance]				Default: 100
 /// @arg  {Function}		[setter]				Default: terra_set
-function terra_number_offset(_grid, _match_value, _xoff, _yoff, _number, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_number_offset(_grid, _match, _xoff, _yoff, _number, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -188,7 +188,7 @@ function terra_number_offset(_grid, _match_value, _xoff, _yoff, _number, _replac
 	for (var yy = 0; yy < _h; yy++) {
 	for (var xx = 0; xx < _w; xx++)
 	{
-		if (terra_test(_grid, xx, yy, _match_value))
+		if (terra_test(_grid, xx, yy, _match))
 		{
 			ds_list_add(_positions, { x1 : xx, y1 : yy });
 		}
@@ -203,7 +203,7 @@ function terra_number_offset(_grid, _match_value, _xoff, _yoff, _number, _replac
 		//Get the coordinates of this valid position.
 		var xx = _positions[| i].x1 + _terraternal_convert_array_choose(_xoff);
 		var yy = _positions[| i].y1 + _terraternal_convert_array_choose(_yoff);
-		if (_setter(_temp, xx, yy, _replace, _new_value))
+		if (_setter(_temp, xx, yy, _replace, _value))
 		{
 			terra_set(_temp, xx, yy, all, "_terraternal_replace");
 			if (++_count >= _number) { break; }
@@ -212,7 +212,7 @@ function terra_number_offset(_grid, _match_value, _xoff, _yoff, _number, _replac
 	
 	//Pasting the final modified TerraGrid.
 	terra_replace_not(_temp, "_terraternal_replace", noone);
-	terra_replace(_temp, "_terraternal_replace", _new_value);
+	terra_replace(_temp, "_terraternal_replace", _value);
 	terra_grid_paste(_grid, _temp, 0, 0, all, _chance, terra_set);
 	
 	//Clearing memory.
@@ -222,17 +222,18 @@ function terra_number_offset(_grid, _match_value, _xoff, _yoff, _number, _replac
 #endregion
 
 //Extras
-#region terra_near(TerraGrid, target, replace, new_value, radius, [chance], [setter]);
-/// @func terra_near(TerraGrid, target, replace, new_value, radius, [chance], [setter]):
+//TODO: Rename target to match?
+#region terra_near(TerraGrid, target, replace, value, radius, [chance], [setter]);
+/// @func terra_near(TerraGrid, target, replace, value, radius, [chance], [setter]):
 /// @desc Replaces all matching values with a new value, within radius distance of matching target values.
 /// @arg  {Id.DsGrid}		TerraGrid
 /// @arg  {Any}					target			Supports Array (Any Of)
 /// @arg  {Any}					replace			Supports Array (Any Of)
-/// @arg  {Any}					new_value		Supports Array (Chooses)
+/// @arg  {Any}					value				Supports Array (Chooses)
 /// @arg  {Real}				radius
 /// @arg  {Real}				[chance]		Default: 100
 /// @arg  {Function}		[setter]		Default: terra_set
-function terra_near(_grid, _target, _replace, _new_value, _radius, _chance = 100, _setter = terra_set)
+function terra_near(_grid, _target, _replace, _value, _radius, _chance = 100, _setter = terra_set)
 {
 	//Getting width and height of the grid.
 	var _w = terra_grid_width(_grid);
@@ -259,7 +260,7 @@ function terra_near(_grid, _target, _replace, _new_value, _radius, _chance = 100
 	
 	//Apply the temporary grid to the target grid.
 	terra_grid_paste(_grid, _temp, 0, 0, _replace, _chance, _setter);
-	terra_replace(_grid, "_terraternal_undefined", _new_value); //Replace with the intended value.
+	terra_replace(_grid, "_terraternal_undefined", _value); //Replace with the intended value.
 	
 	//Clearing memory.
 	terra_grid_destroy(_temp);
@@ -399,7 +400,7 @@ function terra_automata(_grid, _live, _dead, _bounds, _live_changes, _dead_chang
 	terra_grid_destroy(_temp);
 }
 #endregion
-#region terra_fill(TerraGrid, x1, y1, diagonal, replace, new_value);
+#region terra_fill(TerraGrid, x1, y1, diagonal, replace, value);
 /// @func terra_fill
 /// @desc Fills a space of matching values. May cross diagonals or not.
 /// @arg	{Id.DsGrid}		TerraGrid
@@ -407,10 +408,10 @@ function terra_automata(_grid, _live, _dead, _bounds, _live_changes, _dead_chang
 /// @arg  {Real}				ycell1
 /// @arg  {Bool}				diagonal
 /// @arg  {Any}					replace			Supports Array (Any Of)
-/// @arg  {Any}					new_value		Supports Array (Choose)
+/// @arg  {Any}					value				Supports Array (Choose)
 /// @arg  {Real}				[chance]		Default: 100
 /// @arg  {Function}		[setter]		Default: terra_set
-function terra_fill(_grid, xx, yy, _diagonal, _replace, _new_value, _chance = 100, _setter = terra_set)
+function terra_fill(_grid, xx, yy, _diagonal, _replace, _value, _chance = 100, _setter = terra_set)
 {
 	#region _fill_pos(temp, points, xx, yy, replace, setter);
 	static _fill_pos = function(_temp, _points, xx, yy, _replace, _setter)
@@ -459,7 +460,7 @@ function terra_fill(_grid, xx, yy, _diagonal, _replace, _new_value, _chance = 10
 	
 	//Pasting the final modified TerraGrid.
 	terra_replace_not(_temp, "_terraternal_replace", noone);
-	terra_replace(_temp, "_terraternal_replace", _new_value);
+	terra_replace(_temp, "_terraternal_replace", _value);
 	terra_grid_paste(_grid, _temp, 0, 0, all, _chance, terra_set);
 		
 	//Cleanup.

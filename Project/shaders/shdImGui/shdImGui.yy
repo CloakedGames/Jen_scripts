@@ -4,7 +4,7 @@
   "name":"shdImGui",
   "parent":{
     "name":"ImGui_GM",
-    "path":"folders/Libraries/ImGui_GM.yy",
+    "path":"folders/__Libraries/ImGui_GM.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

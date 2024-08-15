@@ -23,7 +23,7 @@
   "name":"rm_initialize",
   "parent":{
     "name":"Rooms",
-    "path":"folders/Rooms.yy",
+    "path":"folders/Testing/Rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

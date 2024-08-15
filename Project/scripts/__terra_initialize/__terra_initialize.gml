@@ -22,22 +22,22 @@ show_debug_message(">>> Terraform version '" + TERRAFORM_VERSION + "' initialize
 
 //Internal Terraform Functions (Undocumented)
 //TODO: Consider the implication of duplicate values in these arrays--document or sanitize.
-#region _terraternal_convert_array_choose(new_value);
+#region _terraternal_convert_array_choose(value);
 /// @func _terraternal_convert_array_choose
 /// @desc	Returns a random value from the array.
-/// @arg new_value
+/// @arg value
 /// @returns Value
-function _terraternal_convert_array_choose(_new_value)
+function _terraternal_convert_array_choose(_value)
 {
-	if (is_array(_new_value))
+	if (is_array(_value))
 	{
 		//Pick one random value from an array to return.
-		var _size = array_length(_new_value);
-		var _output = _new_value[irandom(_size - 1)];
+		var _size = array_length(_value);
+		var _output = _value[irandom(_size - 1)];
 		return _output;
 	}
 	//If it is not an array, return the original value.
-	return _new_value;
+	return _value;
 }
 #endregion
 #region _terraternal_convert_array_all(replace);

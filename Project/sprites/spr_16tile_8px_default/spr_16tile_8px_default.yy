@@ -26,8 +26,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"_Sprites",
-    "path":"folders/Terraform/Templates/Autotiles/_Sprites.yy",
+    "name":"__Sprites",
+    "path":"folders/Terraform/Templates/Autotiles/__Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

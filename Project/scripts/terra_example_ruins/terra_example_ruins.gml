@@ -40,11 +40,11 @@ function terra_example_ruins(_cellsw, _cellsh, _x1, _y1)
 	
 	//Categorize grass and dirt as ground.
 	terra_replace(_terrain, [obj_grass, obj_dirt], "ground");
-	terra_scatter(_terrain, all, "ruins", 100, function(grid, xx, yy, replace, new_value)
+	terra_scatter(_terrain, all, "ruins", 100, function(grid, xx, yy, replace, value)
 	{
 		if ((xx - 2) % 6 == 0 && (yy - 2) % 6 == 0)
 		{
-			terra_set(grid, xx, yy, replace, new_value);
+			terra_set(grid, xx, yy, replace, value);
 		}
 	});
 	

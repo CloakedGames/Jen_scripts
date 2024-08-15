@@ -32,8 +32,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Jen_scripts 2.0",
-    "path":"Jen_scripts 2.0.yyp",
+    "name":"Assets",
+    "path":"folders/Testing/Assets.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

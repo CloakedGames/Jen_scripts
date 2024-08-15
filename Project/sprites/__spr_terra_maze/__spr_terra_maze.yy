@@ -40,8 +40,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"_Internal",
-    "path":"folders/Terraform/_Internal.yy",
+    "name":"__Internal",
+    "path":"folders/Terraform/__Internal.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
